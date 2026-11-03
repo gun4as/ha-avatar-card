@@ -6,16 +6,17 @@
 // Runā caur satelītu (VACA, ESPHome, Voice PE …) vai caur šīs ierīces mikrofonu un skaļruni.
 // Angļu + latviešu valoda, vizuālais redaktors, palīga izvēle (ilgs spiediens). Iestatījumi: README.md.
 
-const VERSION = "2.0.0";
+const VERSION = "2.1.0";
 const STATES = ["idle", "listening", "processing", "responding"];
 
 // Avatāri pēc noklusējuma stāv tajā pašā mapē, kur šis fails (/hacsfiles/… vai /local/…).
+// (no steka, nevis import.meta — tā strādā arī tad, ja resurss pievienots kā parasts JS, nevis modulis)
 const SCRIPT_DIR = (() => {
   try {
-    return new URL(".", import.meta.url).pathname;
-  } catch (e) {
-    return "/local/avatar-card/";
-  }
+    const m = new Error().stack.match(/(https?:\/\/[^\s()]*?\/)[^/\s()]*\.js/);
+    if (m) return new URL(m[1]).pathname;
+  } catch (e) { /* nav steka */ }
+  return "/local/avatar-card/";
 })();
 
 const I18N = {
@@ -29,7 +30,7 @@ const I18N = {
     bad_entity: "entity must be an assist_satellite.… entity",
     card_name: "Voice assistant avatar",
     card_desc: "Talking face for Assist — via a satellite or this device's microphone",
-    names: { pilseta: "Sam", virietis: "Man", sieviete: "Woman", elfs: "Elf", elfe: "Elf girl", robots: "Robot" },
+    names: { pilseta: "Niko", pilsetniece: "Lina", virietis: "Victor", sieviete: "Eva", holovirietis: "Orion", holosieviete: "Aura", elfs: "Twig", elfe: "Moss", robots: "Volt" },
     ed: {
       entity: "Voice satellite (optional — without it this device listens)",
       avatars: "Avatars in the picker (long press on the face)",
@@ -59,7 +60,7 @@ const I18N = {
     bad_entity: "entity jābūt assist_satellite.… entītijai",
     card_name: "Balss palīga avatars",
     card_desc: "Runājoša seja balss palīgam — caur satelītu vai šīs ierīces mikrofonu",
-    names: { pilseta: "Sams", virietis: "Vīrietis", sieviete: "Sieviete", elfs: "Elfs", elfe: "Elfe", robots: "Robots" },
+    names: { pilseta: "Niko", pilsetniece: "Lina", virietis: "Viktors", sieviete: "Ieva", holovirietis: "Orions", holosieviete: "Aura", elfs: "Čiekurs", elfe: "Sūna", robots: "Volts" },
     ed: {
       entity: "Balss satelīts (nav obligāts — bez tā klausās pati ierīce)",
       avatars: "Palīgi izvēlē (ilgs spiediens uz sejas)",
@@ -312,7 +313,11 @@ registerProcessor("avatar-recorder", AvatarRecorder);
 `], { type: "application/javascript" }));
 
 // Gatavie avatāri (bilde <id>.jpg, klipi <id>_idle.mp4 / <id>_talk.mp4); vārdi — I18N[lang].names.
-const CATALOG = ["pilseta", "virietis", "sieviete", "elfs", "elfe", "robots"].map((id) => ({ id }));
+const CATALOG = ["pilseta", "pilsetniece", "virietis", "sieviete", "holovirietis", "holosieviete", "elfs", "elfe", "robots"].map((id) => ({ id }));
+
+// 2.0.0 noklusētie vārdi, kas varēja palikt konfigurācijā — tos aizstāj ar jaunajiem.
+const LEGACY_NAMES = new Set(["Sams", "Sam", "Vīrietis", "Man", "Sieviete", "Woman", "Elfs", "Elf", "Elfe", "Elf girl", "Robots", "Robot"]);
+const isLegacyName = (f) => typeof f === "object" && CATALOG.some((c) => c.id === f.id) && LEGACY_NAMES.has(f.name);
 
 const MIC = `<svg viewBox="0 0 24 24"><path d="M12 14a3 3 0 0 0 3-3V5a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3m5.3-3a5.3 5.3 0 0 1-10.6 0H5a7 7 0 0 0 6 6.9V21h2v-3.1a7 7 0 0 0 6-6.9z"/></svg>`;
 
@@ -346,7 +351,7 @@ class AvatarCard extends HTMLElement {
     this._faces = list
       ? list.map((f) => (typeof f === "string" ? { id: f } : f)).map((f) => ({
           id: f.id,
-          name: f.name, // tukšs → tulkotais vārds (_faceName)
+          name: isLegacyName(f) ? undefined : f.name, // tukšs → tulkotais vārds (_faceName)
           image: f.image || `${base}${f.id}.jpg`,
           videos: f.videos || { idle: `${base}${f.id}_idle.mp4`, responding: `${base}${f.id}_talk.mp4` },
         }))
@@ -973,7 +978,7 @@ class AvatarCardEditor extends HTMLElement {
     const config = { ...old, ...value };
     // Saglabājam esošos nosaukumus/ceļus; jauniem — tikai id (vārds no CATALOG).
     const prev = Object.fromEntries((old.avatars || []).map((f) => (typeof f === "string" ? [f, f] : [f.id, f])));
-    config.avatars = (value.avatars || []).map((id) => prev[id] || id);
+    config.avatars = (value.avatars || []).map((id) => (prev[id] && !isLegacyName(prev[id]) ? prev[id] : id));
     if (config.avatars.length) {
       delete config.image;
       delete config.videos;

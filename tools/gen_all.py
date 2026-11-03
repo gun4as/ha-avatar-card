@@ -28,18 +28,22 @@ FACES = {
     "elfs": ("A cheerful forest elf man with messy green hair with leaves and twigs, pointy ears and a red nose, wearing a dark polo shirt", "nils.mp3"),
     "elfe": ("A cheerful forest elf woman with long green braided hair with leaves and pine cones, pointy ears, wearing a dark polo shirt", "everita.mp3"),
     "robots": ("A friendly white humanoid robot with a black glass visor face showing glowing blue eyes and a glowing wave mouth", "nils.mp3"),
+    "pilsetniece": ("A friendly woman with shoulder-length dark wavy hair and a small earbud, wearing a dark jacket, blurred night city lights behind her", "everita.mp3"),
+    "holovirietis": ("A friendly glowing translucent hologram of a man made of cyan light and sparkling particles, wearing a dark polo shirt", "nils.mp3"),
+    "holosieviete": ("A friendly glowing translucent hologram of a woman with long flowing hair made of cyan light and sparkling particles, wearing a dark polo shirt", "everita.mp3"),
 }
 
 
 def job(name, kind):
     who, voice = FACES[name]
+    room = "softly blurred background" if "city" in who else ROOM  # pilsētas bildēm fons jau aprakstīts
     if kind == "talk":
         prompt = (f"{who} talks calmly and friendly to the camera, natural lip movement, small natural head movements, "
-                  f"occasional blinking, head and shoulders shot, static camera, {ROOM}.")
+                  f"occasional blinking, head and shoulders shot, static camera, {room}.")
         audio, length, seed = HERE / voice, "10.6s", 42
     else:
         prompt = (f"{who} listens silently and looks at the camera, mouth closed, slight friendly smile, natural blinking, "
-                  f"very small head movements, head and shoulders shot, static camera, {ROOM}.")
+                  f"very small head movements, head and shoulders shot, static camera, {room}.")
         audio, length, seed = HERE / "klusums-8s.wav", "6s", 7
     img = str(HERE / "faces" / f"{name}.jpg")
     return {

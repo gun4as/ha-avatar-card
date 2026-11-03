@@ -7,7 +7,7 @@ Runājoša seja tavam Home Assistant balss palīgam. Avatārs gaida, klausās, d
 ![Avatāri](docs/avatars.jpg)
 
 - **Strādā ar jebkuru balss satelītu** (VACA, ESPHome, Home Assistant Voice PE …) vai **bez tā**. Datorā, telefonā vai planšetē kartīte var klausīties caur pašas ierīces mikrofonu un atbildēt caur tās skaļruni.
-- **Seši gatavi avatāri:** Sams, Vīrietis, Sieviete, Elfs, Elfe un Robots, katram ir "gaida" un "runā" video cilpa. Izvēle ar ilgu spiedienu uz sejas.
+- **Deviņi gatavi avatāri:** Niko, Lina, Viktors, Ieva, Orions, Aura, Čiekurs, Sūna un Volts, katram ir "gaida" un "runā" video cilpa. Izvēle ar ilgu spiedienu uz sejas.
 - **Latviešu un angļu valoda**, ko kartīte izvēlas automātiski pēc HA valodas.
 - **Vizuālais redaktors**, YAML nav vajadzīgs.
 - **Var novietot virs jebkura elementa**, piemēram, virs mikrofona ikonas [ha-floorplan](https://github.com/ExperienceLovelace/ha-floorplan) SVG.
@@ -54,7 +54,7 @@ Vienā ierīcē režīmu var piespiest, atverot paneli ar `?avatar_voice=browser
 | Iestatījums | Noklusēts | Apraksts |
 |---|---|---|
 | `entity` | – | `assist_satellite.*`, kura stāvoklis vada seju. Ja nav norādīts, atbild pati ierīce. |
-| `avatars` | visi 6 | Avatāru id saraksts vai objekti `{id, name, image, videos}`. |
+| `avatars` | visi 9 | Avatāru id saraksts vai objekti `{id, name, image, videos}`. Iebūvēto avatāru id ir zemāk sadaļā **Avatāri**. |
 | `voice` | `auto` | `auto`, `satellite` vai `browser`. |
 | `wake_button` | – | Poga, kas liek satelītam klausīties (VACA: `button.vaca_*_wake`). |
 | `mute_entity` | – | Satelīta mikrofona slēdzis. Tas ir redzams izvēlē, un, kad mikrofons izslēgts, seja ir pelēka. |
@@ -75,6 +75,22 @@ entity: assist_satellite.virtuve
 avatars: [pilseta, robots, elfe]
 voice: auto
 ```
+
+## Avatāri
+
+| id | Vārds | |
+|---|---|---|
+| `pilseta` | Niko | vīrietis, nakts pilsēta |
+| `pilsetniece` | Lina | sieviete, nakts pilsēta |
+| `virietis` | Viktors | vīrietis, gudrā māja |
+| `sieviete` | Ieva | sieviete, gudrā māja |
+| `holovirietis` | Orions | hologrammas vīrietis |
+| `holosieviete` | Aura | hologrammas sieviete |
+| `elfs` | Čiekurs | meža elfs |
+| `elfe` | Sūna | meža elfe |
+| `robots` | Volts | robots |
+
+Vārdi ir latviski vai angliski pēc HA valodas. Savu vārdu var iestatīt ar `name` ierakstā `avatars`.
 
 ## Savi avatāri
 

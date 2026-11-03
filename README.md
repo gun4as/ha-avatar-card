@@ -7,7 +7,7 @@ A talking face for your Home Assistant voice assistant. The avatar idles, listen
 ![Avatars](docs/avatars.jpg)
 
 - **Works with any voice satellite** (VACA, ESPHome, Home Assistant Voice PE, …) or **without one**: on a PC, phone or tablet the card can listen with that device's own microphone and answer through its speaker.
-- **Six ready-made avatars:** Sam, Man, Woman, Elf, Elf girl and Robot. Each has idle and talking video loops. Long-press the face to pick one.
+- **Nine ready-made avatars:** Niko, Lina, Victor, Eva, Orion, Aura, Twig, Moss and Volt. Each has idle and talking video loops. Long-press the face to pick one.
 - **English and Latvian**, chosen automatically from your Home Assistant language.
 - **Visual editor:** no YAML needed.
 - **Can sit on top of any element**, for example a microphone icon in an [ha-floorplan](https://github.com/ExperienceLovelace/ha-floorplan) SVG.
@@ -54,7 +54,7 @@ You can force a mode on one device by opening the dashboard with `?avatar_voice=
 | Option | Default | Description |
 |---|---|---|
 | `entity` | – | `assist_satellite.*` whose state drives the face. If omitted, the device answers itself. |
-| `avatars` | all 6 | List of avatar ids, or objects `{id, name, image, videos}`. |
+| `avatars` | all 9 | List of avatar ids, or objects `{id, name, image, videos}`. Built-in ids are listed under **Avatars** below. |
 | `voice` | `auto` | `auto`, `satellite` or `browser`. |
 | `wake_button` | – | Button that makes the satellite listen (VACA: `button.vaca_*_wake`). |
 | `mute_entity` | – | Satellite mic mute switch. It is shown in the picker, and the face turns grey while muted. |
@@ -75,6 +75,22 @@ entity: assist_satellite.kitchen
 avatars: [pilseta, robots, elfe]
 voice: auto
 ```
+
+## Avatars
+
+| id | Name | |
+|---|---|---|
+| `pilseta` | Niko | man, night city |
+| `pilsetniece` | Lina | woman, night city |
+| `virietis` | Victor | man, smart home |
+| `sieviete` | Eva | woman, smart home |
+| `holovirietis` | Orion | hologram man |
+| `holosieviete` | Aura | hologram woman |
+| `elfs` | Twig | forest elf |
+| `elfe` | Moss | forest elf girl |
+| `robots` | Volt | robot |
+
+Names follow the Home Assistant language (English or Latvian). Set `name` in an `avatars` entry to use your own.
 
 ## Your own avatars
 
