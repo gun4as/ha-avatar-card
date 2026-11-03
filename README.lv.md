@@ -1,10 +1,12 @@
 # Balss palīga avatars Home Assistant Assist
 
-**[English →](README.md)**
+[![HACS validation](https://github.com/gun4as/ha-avatar-card/actions/workflows/validate.yml/badge.svg)](https://github.com/gun4as/ha-avatar-card/actions/workflows/validate.yml) [![Release](https://img.shields.io/github/v/release/gun4as/ha-avatar-card)](https://github.com/gun4as/ha-avatar-card/releases)
+
+**[English →](https://github.com/gun4as/ha-avatar-card/blob/main/README.md)**
 
 Runājoša seja tavam Home Assistant balss palīgam. Avatārs gaida, klausās, domā un runā, un viņa lūpas kustas video cilpās. Kad palīgs ir aktīvs, seja izplešas pāri panelim un zem tās redzams, ko tu teici un ko viņš atbildēja.
 
-![Avatāri](docs/avatars.jpg)
+![Avatāri](https://raw.githubusercontent.com/gun4as/ha-avatar-card/main/docs/avatars.jpg)
 
 - **Strādā ar jebkuru balss satelītu** (VACA, ESPHome, Home Assistant Voice PE …) vai **bez tā**. Datorā, telefonā vai planšetē kartīte var klausīties caur pašas ierīces mikrofonu un atbildēt caur tās skaļruni.
 - **Divpadsmit gatavi avatāri:** Niko, Lina, Viktors, Ieva, Orions, Aura, Teodors, Ada, Čiekurs, Sūna, Rudis un Volts, katram ir "gaida" un "runā" video cilpa. Izvēle ar ilgu spiedienu uz sejas.
@@ -12,7 +14,7 @@ Runājoša seja tavam Home Assistant balss palīgam. Avatārs gaida, klausās, d
 - **Vizuālais redaktors**, YAML nav vajadzīgs.
 - **Var novietot virs jebkura elementa**, piemēram, virs mikrofona ikonas [ha-floorplan](https://github.com/ExperienceLovelace/ha-floorplan) SVG.
 
-![Runā](docs/preview.jpg)
+![Runā](https://raw.githubusercontent.com/gun4as/ha-avatar-card/main/docs/preview.jpg)
 
 ## Uzstādīšana
 

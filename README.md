@@ -1,10 +1,12 @@
 # Avatar Card for Home Assistant Assist
 
-**[Latviski →](README.lv.md)**
+[![HACS validation](https://github.com/gun4as/ha-avatar-card/actions/workflows/validate.yml/badge.svg)](https://github.com/gun4as/ha-avatar-card/actions/workflows/validate.yml) [![Release](https://img.shields.io/github/v/release/gun4as/ha-avatar-card)](https://github.com/gun4as/ha-avatar-card/releases)
+
+**[Latviski →](https://github.com/gun4as/ha-avatar-card/blob/main/README.lv.md)**
 
 A talking face for your Home Assistant voice assistant. The avatar idles, listens, thinks and speaks with lip-synced video loops. While Assist is active it expands over the dashboard and shows what you said and what it answered.
 
-![Avatars](docs/avatars.jpg)
+![Avatars](https://raw.githubusercontent.com/gun4as/ha-avatar-card/main/docs/avatars.jpg)
 
 - **Works with any voice satellite** (VACA, ESPHome, Home Assistant Voice PE, …) or **without one**: on a PC, phone or tablet the card can listen with that device's own microphone and answer through its speaker.
 - **Twelve ready-made avatars:** Niko, Lina, Victor, Eva, Orion, Aura, Theo, Ada, Twig, Moss, Rusty and Volt. Each has idle and talking video loops. Long-press the face to pick one.
@@ -12,7 +14,7 @@ A talking face for your Home Assistant voice assistant. The avatar idles, listen
 - **Visual editor:** no YAML needed.
 - **Can sit on top of any element**, for example a microphone icon in an [ha-floorplan](https://github.com/ExperienceLovelace/ha-floorplan) SVG.
 
-![Talking](docs/preview.jpg)
+![Talking](https://raw.githubusercontent.com/gun4as/ha-avatar-card/main/docs/preview.jpg)
 
 ## Installation
 

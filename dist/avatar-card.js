@@ -6,7 +6,7 @@
 // Runā caur satelītu (VACA, ESPHome, Voice PE …) vai caur šīs ierīces mikrofonu un skaļruni.
 // Angļu + latviešu valoda, vizuālais redaktors, palīga izvēle (ilgs spiediens). Iestatījumi: README.md.
 
-const VERSION = "2.2.0";
+const VERSION = "2.2.1";
 const STATES = ["idle", "listening", "processing", "responding"];
 
 // Avatāri pēc noklusējuma stāv tajā pašā mapē, kur šis fails (/hacsfiles/… vai /local/…).
