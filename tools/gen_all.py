@@ -31,12 +31,15 @@ FACES = {
     "pilsetniece": ("A friendly woman with shoulder-length dark wavy hair and a small earbud, wearing a dark jacket, blurred night city lights behind her", "everita.mp3"),
     "holovirietis": ("A friendly glowing translucent hologram of a man made of cyan light and sparkling particles, wearing a dark polo shirt", "nils.mp3"),
     "holosieviete": ("A friendly glowing translucent hologram of a woman with long flowing hair made of cyan light and sparkling particles, wearing a dark polo shirt", "everita.mp3"),
+    "inzenieris": ("A friendly steampunk engineer man with dark wavy hair, round brass glasses and a brass earpiece, in a dark coat with gauges, warm workshop with gears and clocks behind him", "nils.mp3"),
+    "inzeniere": ("A friendly steampunk engineer woman with dark hair pinned up, round brass glasses and a brass earpiece, in a dark coat with gauges, warm workshop with gears and clocks behind her", "everita.mp3"),
+    "lapsa": ("A friendly red fox with amber eyes and glowing sparkles in its fur, wearing a smart collar, sitting and facing the camera", "nils.mp3"),
 }
 
 
 def job(name, kind):
     who, voice = FACES[name]
-    room = "softly blurred background" if "city" in who else ROOM  # pilsētas bildēm fons jau aprakstīts
+    room = "softly blurred background" if ("city" in who or "behind" in who) else ROOM  # pilsētas bildēm fons jau aprakstīts
     if kind == "talk":
         prompt = (f"{who} talks calmly and friendly to the camera, natural lip movement, small natural head movements, "
                   f"occasional blinking, head and shoulders shot, static camera, {room}.")

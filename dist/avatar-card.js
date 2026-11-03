@@ -6,7 +6,7 @@
 // Runā caur satelītu (VACA, ESPHome, Voice PE …) vai caur šīs ierīces mikrofonu un skaļruni.
 // Angļu + latviešu valoda, vizuālais redaktors, palīga izvēle (ilgs spiediens). Iestatījumi: README.md.
 
-const VERSION = "2.1.0";
+const VERSION = "2.2.0";
 const STATES = ["idle", "listening", "processing", "responding"];
 
 // Avatāri pēc noklusējuma stāv tajā pašā mapē, kur šis fails (/hacsfiles/… vai /local/…).
@@ -30,7 +30,7 @@ const I18N = {
     bad_entity: "entity must be an assist_satellite.… entity",
     card_name: "Voice assistant avatar",
     card_desc: "Talking face for Assist — via a satellite or this device's microphone",
-    names: { pilseta: "Niko", pilsetniece: "Lina", virietis: "Victor", sieviete: "Eva", holovirietis: "Orion", holosieviete: "Aura", elfs: "Twig", elfe: "Moss", robots: "Volt" },
+    names: { pilseta: "Niko", pilsetniece: "Lina", virietis: "Victor", sieviete: "Eva", holovirietis: "Orion", holosieviete: "Aura", elfs: "Twig", elfe: "Moss", robots: "Volt", inzenieris: "Theo", inzeniere: "Ada", lapsa: "Rusty" },
     ed: {
       entity: "Voice satellite (optional — without it this device listens)",
       avatars: "Avatars in the picker (long press on the face)",
@@ -60,7 +60,7 @@ const I18N = {
     bad_entity: "entity jābūt assist_satellite.… entītijai",
     card_name: "Balss palīga avatars",
     card_desc: "Runājoša seja balss palīgam — caur satelītu vai šīs ierīces mikrofonu",
-    names: { pilseta: "Niko", pilsetniece: "Lina", virietis: "Viktors", sieviete: "Ieva", holovirietis: "Orions", holosieviete: "Aura", elfs: "Čiekurs", elfe: "Sūna", robots: "Volts" },
+    names: { pilseta: "Niko", pilsetniece: "Lina", virietis: "Viktors", sieviete: "Ieva", holovirietis: "Orions", holosieviete: "Aura", elfs: "Čiekurs", elfe: "Sūna", robots: "Volts", inzenieris: "Teodors", inzeniere: "Ada", lapsa: "Rudis" },
     ed: {
       entity: "Balss satelīts (nav obligāts — bez tā klausās pati ierīce)",
       avatars: "Palīgi izvēlē (ilgs spiediens uz sejas)",
@@ -313,7 +313,7 @@ registerProcessor("avatar-recorder", AvatarRecorder);
 `], { type: "application/javascript" }));
 
 // Gatavie avatāri (bilde <id>.jpg, klipi <id>_idle.mp4 / <id>_talk.mp4); vārdi — I18N[lang].names.
-const CATALOG = ["pilseta", "pilsetniece", "virietis", "sieviete", "holovirietis", "holosieviete", "elfs", "elfe", "robots"].map((id) => ({ id }));
+const CATALOG = ["pilseta", "pilsetniece", "virietis", "sieviete", "holovirietis", "holosieviete", "inzenieris", "inzeniere", "elfs", "elfe", "lapsa", "robots"].map((id) => ({ id }));
 
 // 2.0.0 noklusētie vārdi, kas varēja palikt konfigurācijā — tos aizstāj ar jaunajiem.
 const LEGACY_NAMES = new Set(["Sams", "Sam", "Vīrietis", "Man", "Sieviete", "Woman", "Elfs", "Elf", "Elfe", "Elf girl", "Robots", "Robot"]);
@@ -347,7 +347,9 @@ class AvatarCard extends HTMLElement {
     const c = this._config;
     let base = c.avatar_base ?? SCRIPT_DIR;
     if (base && !base.endsWith("/")) base += "/";
-    const list = c.avatars?.length ? c.avatars : c.image || c.videos ? null : CATALOG;
+    // v2.0.0 ierakstīja konfigurācijā 6 palīgus ar noklusētajiem vārdiem — tāds saraksts nozīmē "visi".
+    const legacyList = c.avatars?.length && c.avatars.every(isLegacyName);
+    const list = c.avatars?.length && !legacyList ? c.avatars : c.image || c.videos ? null : CATALOG;
     this._faces = list
       ? list.map((f) => (typeof f === "string" ? { id: f } : f)).map((f) => ({
           id: f.id,
@@ -967,7 +969,8 @@ class AvatarCardEditor extends HTMLElement {
       this.appendChild(this._form);
     }
     const c = this._config;
-    const avatars = (c.avatars?.length ? c.avatars : c.image || c.videos ? [] : CATALOG).map((f) => (typeof f === "string" ? f : f.id));
+    const own = c.avatars?.length && !c.avatars.every(isLegacyName);
+    const avatars = (own ? c.avatars : c.image || c.videos ? [] : CATALOG).map((f) => (typeof f === "string" ? f : f.id));
     this._form.hass = this._hass;
     this._form.schema = editorSchema(I18N[langOf(this._hass)]);
     this._form.data = { voice: "auto", expand: true, size: 110, ...c, avatars };
