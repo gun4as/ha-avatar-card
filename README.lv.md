@@ -18,11 +18,17 @@ Runājoša seja tavam Home Assistant balss palīgam. Avatārs gaida, klausās, d
 
 ## Uzstādīšana
 
-### HACS (pielāgota krātuve)
+### HACS / Marketplace (ieteicams)
+
+1. Atver **HACS** (Home Assistant 2026.11 un jaunākā: **Iestatījumi → Marketplace**).
+2. Meklē **Avatar Card** un lejupielādē to.
+3. Pārlādē pārlūku.
+
+### Pielāgota krātuve (ja meklēšana to vēl neatrod)
 
 1. Atver **HACS → ⋮ → Custom repositories**.
-2. Pievieno šīs krātuves URL ar tipu **Dashboard**.
-3. Atrodi **Avatar Card**, uzstādi to un pārlādē pārlūku.
+2. Pievieno `https://github.com/gun4as/ha-avatar-card` ar tipu **Dashboard**.
+3. Atrodi **Avatar Card**, lejupielādē to un pārlādē pārlūku.
 
 ### Ar roku
 

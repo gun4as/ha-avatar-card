@@ -6,7 +6,7 @@
 // Runā caur satelītu (VACA, ESPHome, Voice PE …) vai caur šīs ierīces mikrofonu un skaļruni.
 // Angļu + latviešu valoda, vizuālais redaktors, palīga izvēle (ilgs spiediens). Iestatījumi: README.md.
 
-const VERSION = "2.2.1";
+const VERSION = "2.2.2";
 const STATES = ["idle", "listening", "processing", "responding"];
 
 // Avatāri pēc noklusējuma stāv tajā pašā mapē, kur šis fails (/hacsfiles/… vai /local/…).
@@ -326,7 +326,9 @@ class AvatarCard extends HTMLElement {
     if (config.entity && !config.entity.startsWith("assist_satellite.")) {
       throw new Error(I18N[langOf(this._hass)].bad_entity);
     }
-    this._config = { size: 110, expand: true, voice: "auto", ...config };
+    this._config = { expand: true, voice: "auto", ...config };
+    // YAML var saturēt jebko — izmērs vienmēr ir skaitlis 40–600 px.
+    this._config.size = Math.min(600, Math.max(40, Number(config.size) || 110));
     // auto: Android WebView, kas nav HA aplikācija (piem. VACA planšete), un ir satelīts → modina satelītu;
     // citur (dators, telefona HA aplikācija, pārlūks) vai bez satelīta → šīs ierīces mikrofons un skaļrunis.
     // Ierīcē var piespiest ar ?avatar_voice=browser|satellite|auto (atceras localStorage).
@@ -632,13 +634,15 @@ class AvatarCard extends HTMLElement {
     } else {
       root.innerHTML = `<style>${STYLE}</style>
         <ha-card>
-          <div class="avatar" style="width:${c.size}px;height:${c.size}px">${this._avatarHtml()}</div>
+          <div class="avatar">${this._avatarHtml()}</div>
           <div class="label"><span class="name"></span><span class="state"></span></div>
         </ha-card>`;
       this._fillImages(root);
       root.querySelector(".name").textContent = this._faceName(this._face);
       root.querySelector("ha-card").addEventListener("click", () => this._wake());
       this._small = root.querySelector(".avatar");
+      // Izmērs caur style īpašībām, nevis HTML: konfigurācijas vērtība nekad nenonāk innerHTML.
+      this._small.style.width = this._small.style.height = `${c.size}px`;
       this._stateEl = root.querySelector(".state");
     }
     this._bindPress(this._small);

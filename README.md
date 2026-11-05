@@ -18,11 +18,17 @@ A talking face for your Home Assistant voice assistant. The avatar idles, listen
 
 ## Installation
 
-### HACS (custom repository)
+### HACS / Marketplace (recommended)
+
+1. Open **HACS** (in Home Assistant 2026.11 and later: **Settings → Marketplace**).
+2. Search for **Avatar Card** and download it.
+3. Reload the browser.
+
+### Custom repository (if the search does not find it yet)
 
 1. Open **HACS → ⋮ → Custom repositories**.
-2. Add this repository's URL with type **Dashboard**.
-3. Find **Avatar Card**, install it, and reload the browser.
+2. Add `https://github.com/gun4as/ha-avatar-card` with type **Dashboard**.
+3. Find **Avatar Card**, download it, and reload the browser.
 
 ### Manual
 
